@@ -33,16 +33,18 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
-
   var selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-  Widget page;
-  switch (selectedIndex){
-    case 0: page = const MyNumber();
-    case 1: page = const MyFavorite();
-    default: throw UnimplementedError(' $selectedIndex');
-  }
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page = const MyNumber();
+      case 1:
+        page = const MyFavorite();
+      default:
+        throw UnimplementedError(' $selectedIndex');
+    }
 
     return Scaffold(
       body: Row(
@@ -106,8 +108,16 @@ class MyState extends ChangeNotifier {
     }
     notifyListeners();
   }
-  void sayiSil({required int index}){
+
+  void sayiSil({required int index}) {
     eklenenler.removeAt(index);
+    notifyListeners();
+  }
+
+  int row = 1;
+  String selectedDrop = "1";
+  void sayiSirala() {
+    row = int.parse(selectedDrop);
     notifyListeners();
   }
 }
@@ -168,33 +178,82 @@ class MyNumber extends StatelessWidget {
     );
   }
 }
-class MyFavorite extends StatelessWidget{
+
+class MyFavorite extends StatelessWidget {
   const MyFavorite({super.key});
-   
+
   @override
   Widget build(BuildContext context) {
     var state = context.watch<MyState>();
 
     state.eklenenler.sort((a, b) => a.compareTo(b));
-    if(state.eklenenler.isEmpty){
-          return const Center(child: Text("Hiçbir sayı Eklemediniz"));
-        }
-  
-    return ListView(
-      children: [
+    if (state.eklenenler.isEmpty) {
+      return const Center(child: Text("Hiçbir sayı Eklemediniz"));
+    }
+
+    List<String> dropList = ["1", "2", "3", "4", "5", "6"];
+    return Scaffold(
+      body: ListView(children: [
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Text("Şuan ${state.eklenenler.length} adet sayı eklediniz : "),
+          child: Column(
+            children: [
+              DropdownMenu(
+                initialSelection: state.selectedDrop,
+                dropdownMenuEntries: dropList.map((String dropItem) {
+                  return DropdownMenuEntry(value: dropItem, label: dropItem);
+                }).toList(),
+                onSelected: (String? value) {
+                  state.selectedDrop = value as String;
+                  state.sayiSirala();
+                },
+              ),
+              NewWidget(state: state),
+            ],
+          ),
         ),
-         
-        for(int i = 0; i < state.eklenenler.length; i++)
-          ListTile(
-            leading: const Icon(Icons.check_box),
-            title: Text('${state.eklenenler[i]}'),
-            onLongPress:(){ state.sayiSil(index: i);},
-            
-            ),
-        
+      ]),
+    );
+  }
+}
+
+class NewWidget extends StatelessWidget {
+  const NewWidget({
+    super.key,
+    required this.state,
+  });
+
+  final MyState state;
+
+  @override
+  Widget build(BuildContext context) {
+    return Table(
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: [
+        for (int x = 0;
+            x < (state.eklenenler.length / state.row).ceil();
+            x++)
+          TableRow(decoration: const BoxDecoration(), children: [
+            for (int y = 0; y < state.row; y++)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () { state.sayiSil(index: (x * state.row) + y  );},
+                  child: TableCell(
+                    child: Center(
+                      child: (x * state.row) + y <
+                              state.eklenenler.length
+                          ? Text(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displaySmall,
+                              "${state.eklenenler[(x * state.row) + y]}")
+                          : const Text(''),
+                    ),
+                  ),
+                ),
+              ),
+          ]),
       ],
     );
   }
