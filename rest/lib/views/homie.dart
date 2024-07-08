@@ -18,9 +18,10 @@ class _MyHomeState extends State<MyHome> {
     super.initState();
     getData();
   }
+
   getData() async {
-    posts = await RemoteService().getPosts();
-    if(posts != null){
+    posts = await RemoteService().GetLog();
+    if (posts != null) {
       setState(() {
         isLoaded = true;
       });
@@ -35,15 +36,12 @@ class _MyHomeState extends State<MyHome> {
       ),
       body: Visibility(
         visible: isLoaded,
-        child: ListView.builder(
-          itemCount: posts?.length,
-          itemBuilder: (context, index) {
-          return Container(
-            child: Text("${posts?[index].title}"),
-          );
-          
-        }),
         replacement: const Center(child: CircularProgressIndicator()),
+        child: ListView.builder(
+            itemCount: posts?.length,
+            itemBuilder: (context, index) {
+              return Text("${posts?[index].title}");
+            }),
       ),
     );
   }

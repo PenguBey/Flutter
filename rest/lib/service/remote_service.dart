@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:rest/models/post.dart';
 import 'package:http/http.dart' as http;
@@ -12,9 +12,6 @@ class RemoteService {
     if (response.statusCode == 200) {
       var json = response.body;
       return postFromJson(json);
-    }
-    else {
-      return null;
     }
   }
 }
