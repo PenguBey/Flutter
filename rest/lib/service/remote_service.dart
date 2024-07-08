@@ -13,5 +13,8 @@ class RemoteService {
       var json = response.body;
       return postFromJson(json);
     }
+    else {
+      return null;
+    }
   }
 }
