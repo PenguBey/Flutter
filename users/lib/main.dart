@@ -50,6 +50,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+
+
+
+
+
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         TextFormField(
-                          
                           decoration: const InputDecoration(
                               labelText: "KullaniciAdi",
                               icon: Icon(Icons.person)),
