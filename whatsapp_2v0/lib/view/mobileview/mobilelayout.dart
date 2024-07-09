@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_2v0/color.dart';
+import 'package:whatsapp_2v0/view/mobileview/chatview.dart';
 
 class Mobilelayout extends StatelessWidget {
   const Mobilelayout({super.key});
@@ -10,6 +11,7 @@ class Mobilelayout extends StatelessWidget {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: appBarColor,
             title: const Text(
               "WhatsApp",
               style: TextStyle(
@@ -31,17 +33,28 @@ class Mobilelayout extends StatelessWidget {
                     Icons.more_vert,
                     color: Colors.grey,
                   ))
-            ],bottom: const TabBar(
+            ],
+            bottom: const TabBar(
               indicatorColor: tabColor,
               indicatorWeight: 4,
               unselectedLabelColor: Colors.grey,
               labelColor: tabColor,
               labelStyle: TextStyle(fontWeight: FontWeight.bold),
               tabs: [
-              Tab(text: "CHATS",),
-              Tab(text: "STATUS",),
-              Tab(text: "CALLS",),
-            ],),
+                Tab(
+                  text: "CHATS",
+                ),
+                Tab(
+                  text: "STATUS",
+                ),
+                Tab(
+                  text: "CALLS",
+                ),
+              ],
+            ),
+          ),
+          body: const TabBarView(
+            children: [ChatView(), Placeholder(), Placeholder()],
           ),
         ));
   }
