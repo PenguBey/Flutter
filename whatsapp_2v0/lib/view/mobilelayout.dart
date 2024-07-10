@@ -1,18 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:whatsapp_2v0/color.dart';
-import 'package:whatsapp_2v0/view/mobileview/chatview.dart';
+import 'package:whatsapp_2v0/view/chatview.dart';
 
-
-void onTabTapped(int value) {
-  FloatCount().setIcon(value);
-}
 class FloatCount with ChangeNotifier {
   var iconMessage = Icons.message;
-   setIcon(int value) {
+  setIcon(int value) {
     switch (value) {
       case 0:
-        iconMessage = Icons.camera_enhance;
+        iconMessage = Icons.message;
         notifyListeners();
         break;
       case 1:
@@ -25,7 +22,6 @@ class FloatCount with ChangeNotifier {
         break;
       default:
     }
-    
   }
 }
 
@@ -34,6 +30,8 @@ class Mobilelayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<FloatCount>();
+
     return DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -61,14 +59,14 @@ class Mobilelayout extends StatelessWidget {
                     color: Colors.grey,
                   )),
             ],
-            bottom: const TabBar(
+            bottom:  TabBar(
               dividerHeight: 4,
               indicatorColor: tabColor,
               indicatorWeight: 4,
               unselectedLabelColor: Colors.grey,
               labelColor: tabColor,
-              labelStyle: TextStyle(fontWeight: FontWeight.bold),
-              tabs: [
+              labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+              tabs: const [
                 Tab(
                   text: "CHATS",
                 ),
@@ -79,8 +77,7 @@ class Mobilelayout extends StatelessWidget {
                   text: "CALLS",
                 ),
               ],
-              onTap: onTabTapped
-              ,
+              onTap: (value) => appState.setIcon(value),
             ),
           ),
           body: const TabBarView(
@@ -89,8 +86,8 @@ class Mobilelayout extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             onPressed: () {},
             backgroundColor: tabColor,
-            child:  Icon(
-              FloatCount().iconMessage,
+            child: Icon(
+              appState.iconMessage,
               color: Colors.white,
             ),
           ),

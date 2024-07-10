@@ -230,23 +230,20 @@ class NewWidget extends StatelessWidget {
     return Table(
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
-        for (int x = 0;
-            x < (state.eklenenler.length / state.row).ceil();
-            x++)
+        for (int x = 0; x < (state.eklenenler.length / state.row).ceil(); x++)
           TableRow(decoration: const BoxDecoration(), children: [
             for (int y = 0; y < state.row; y++)
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
-                  onTap: () { state.sayiSil(index: (x * state.row) + y  );},
+                  onTap: () {
+                    state.sayiSil(index: (x * state.row) + y);
+                  },
                   child: TableCell(
                     child: Center(
-                      child: (x * state.row) + y <
-                              state.eklenenler.length
+                      child: (x * state.row) + y < state.eklenenler.length
                           ? Text(
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displaySmall,
+                              style: Theme.of(context).textTheme.displaySmall,
                               "${state.eklenenler[(x * state.row) + y]}")
                           : const Text(''),
                     ),

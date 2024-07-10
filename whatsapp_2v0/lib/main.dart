@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_2v0/color.dart';
 import 'package:whatsapp_2v0/responsive/responsive_layout.dart';
-import 'package:whatsapp_2v0/view/desktopview/desktoplayout.dart';
-import 'package:whatsapp_2v0/view/mobileview/mobilelayout.dart';
+import 'package:whatsapp_2v0/view/desktoplayout.dart';
+import 'package:whatsapp_2v0/view/mobilelayout.dart';
 import 'package:provider/provider.dart';
 
 void main() {

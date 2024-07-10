@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_2v0/color.dart';
 import 'package:whatsapp_2v0/info.dart';
+import 'package:whatsapp_2v0/view/peronchatview.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key});
@@ -14,7 +15,7 @@ class ChatView extends StatelessWidget {
             return Column(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PersonChat()));},
                   child: ListTile(
                     title: Text(
                       info[index]["name"].toString(),
